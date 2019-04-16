@@ -1,7 +1,6 @@
 class Item:
-  def __init__(self, name, location, clues):
+  def __init__(self, name, clues):
     self.name = name
-    self.location = location
     self.used = False
     self.clues = clues
     self.clueIndex = -1

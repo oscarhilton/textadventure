@@ -2,38 +2,51 @@ from Player import Player
 from Item import Item
 from Puzzle import Puzzle
 from Story import Story
-
-player = Player()
-
-note = Item("note", "fridge", ["Check the fridge", "Look in the cool fridge bro"])
-scissors = Item("scissors", "table", ["Snip snip"])
-
-# player.pickUpItem(note)
+from Location import Location
+from Area import Area
+from HiddenItem import HiddenItem
 
 mobile5 = Puzzle(
   "Mobile5",
+  Player(),
   [ #locations
-    "living room",
-    "kitchen"
-  ],
-  [ #items
-    note,
-    scissors
+    Location(
+      "kitchen",
+      [
+        Area(
+          "fridge",
+          [
+            HiddenItem(
+              "Butter dish",
+              Item(
+                "note",
+                [
+                  "Check the fridge",
+                  "Look in the cool fridge bro"
+                ]
+              ),
+            )
+          ]
+        ),
+        Area(
+          "cupboard",
+          [
+            HiddenItem(
+              "shelf",
+              Item(
+                "scissors",
+                [
+                  "Snip snip",
+                  "scissor scissor"
+                ]
+              )
+            )
+          ]
+        )
+      ]
+    )
   ],
   [ #story
     Story("You find youself in an office."),
-    Story("It is a nice office"),
-    Story("Look at all the things in the office"),
-    Story("You need a note to continue", player.hasItem(note))
   ]
-)
-
-mobile5.play()
-
-
-# note.useItem()
-# player.pickUpItem(scissors)
-# scissors.useItem()
-
-# for x in player.inventory:
-#   print(x.useClue())
+).play()
