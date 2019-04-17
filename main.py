@@ -16,6 +16,7 @@ mobile5 = Puzzle(
       [
         Area(
           "front",
+          "front of the bow",
           [
             HiddenItem(
               "chest",
@@ -31,6 +32,7 @@ mobile5 = Puzzle(
         ),
         Area(
           "left",
+          "left of the bow",
           [
             HiddenItem(
               "shelf",
@@ -46,6 +48,7 @@ mobile5 = Puzzle(
         ),
         Area(
           "right",
+          "right of the bow",
           [
             HiddenItem(
               "shelf",
@@ -66,7 +69,8 @@ mobile5 = Puzzle(
       "The ships bathroom",
       [
         Area(
-          "front",
+          "bath",
+          "there is a bathtub in front of you",
           [
             HiddenItem(
               "chest",

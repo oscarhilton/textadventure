@@ -10,15 +10,11 @@ class Puzzle:
     self.story = story
     self.storyIndex = 0
 
-    self.state = {
-      "location": "bow",
-      "item": "none"
-    }
+    self.currentLocation = locations[0]
 
   def play(self):
     if self.gameOver:
       self.gameOver = False
-      self.getLocationNames()
       print("Starting puzzle {}!".format(self.name))
       while not self.gameOver:
         instruction = raw_input("Enter an instruction: ")
@@ -26,10 +22,10 @@ class Puzzle:
     else:
        print("Game already started!")
 
-  def getLocationNames(self):
-    def getNames(location):
-      return location.name
-    return map(getNames, self.locations)
+  def getNames(self, array):
+    def returnName(item):
+      return item.name
+    return map(returnName, array)
 
   def progressStory(self):
     time.sleep(0.5)
@@ -49,9 +45,13 @@ class Puzzle:
 
   def goToLocation(self, location):
     print("You moved to ", location)
-    self.state["location"] = location
 
   def handleInstruction(self, instruction):
+    def getIndexByName(list, toFind):
+      for x in list:
+        if x.name == toFind:
+          return list.index(x)
+
     if not isinstance(instruction, list):
       instruction = [instruction]
 
@@ -62,12 +62,9 @@ class Puzzle:
         self.handleInstruction(instructionSplit)
         return
 
-    locationNames = self.getLocationNames()
+    locationNames = self.getNames(self.locations)
+    areaNames = self.getNames(self.currentLocation.areas)
 
-    def findByName(list, toFind):
-      for x in list:
-        if x.name == toFind:
-          return list.index(x)
 
     def common_data(list1, list2): 
       result = False
@@ -83,19 +80,23 @@ class Puzzle:
       instructionWords = inst.split()
 
       commonLocation = common_data(locationNames, instructionWords)
+      commonArea = common_data(areaNames, instructionWords)
       commonAdvance = common_data(language.dictionary["go"], instructionWords)
       commonExplore = common_data(language.dictionary["explore"], instructionWords)
 
       if commonAdvance:
         if commonLocation:
-          if commonLocation == self.state["location"]:
-            self.state.update({ "location": commonLocation })
+          if commonLocation == self.currentLocation:
+            self.currentLocation = self.locations[getIndexByName(self.locations, commonLocation)]
             print("you are already in ", commonLocation)
           else:
-            self.locations[findByName(self.locations, self.state["location"])].leave()
-            self.state.update({ "location": commonLocation })
+            self.currentLocation.leave()
+            self.currentLocation = self.locations[getIndexByName(self.locations, commonLocation)]
             self.goToLocation(commonLocation)
         else:
           print("I couldn't understand where you want to go.")
       if commonExplore:
-        self.locations[findByName(self.locations, self.state["location"])].explore()
+        if commonArea:
+          self.currentLocation.areas[getIndexByName(self.currentLocation.areas, commonArea)].explore()
+        else: 
+          self.currentLocation.explore()
