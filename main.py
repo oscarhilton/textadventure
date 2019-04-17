@@ -7,17 +7,18 @@ from Area import Area
 from HiddenItem import HiddenItem
 
 mobile5 = Puzzle(
-  "Mobile5",
+  "Old ship",
   Player(),
   [ #locations
     Location(
-      "kitchen",
+      "bow",
+      "The front of the ship",
       [
         Area(
-          "fridge",
+          "front",
           [
             HiddenItem(
-              "Butter dish",
+              "chest",
               Item(
                 "note",
                 [
@@ -29,7 +30,22 @@ mobile5 = Puzzle(
           ]
         ),
         Area(
-          "cupboard",
+          "left",
+          [
+            HiddenItem(
+              "shelf",
+              Item(
+                "scissors",
+                [
+                  "Snip snip",
+                  "scissor scissor"
+                ]
+              )
+            )
+          ]
+        ),
+        Area(
+          "right",
           [
             HiddenItem(
               "shelf",
@@ -43,7 +59,28 @@ mobile5 = Puzzle(
             )
           ]
         )
-      ]
+      ],
+    ),
+    Location(
+      "bathroom",
+      "The ships bathroom",
+      [
+        Area(
+          "front",
+          [
+            HiddenItem(
+              "chest",
+              Item(
+                "note",
+                [
+                  "Check the fridge",
+                  "Look in the cool fridge bro"
+                ]
+              ),
+            )
+          ]
+        ),
+      ],
     )
   ],
   [ #story

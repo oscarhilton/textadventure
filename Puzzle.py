@@ -11,7 +11,7 @@ class Puzzle:
     self.storyIndex = 0
 
     self.state = {
-      "location": "start",
+      "location": "bow",
       "item": "none"
     }
 
@@ -64,6 +64,11 @@ class Puzzle:
 
     locationNames = self.getLocationNames()
 
+    def findByName(list, toFind):
+      for x in list:
+        if x.name == toFind:
+          return list.index(x)
+
     def common_data(list1, list2): 
       result = False
       for x in list1:
@@ -79,16 +84,18 @@ class Puzzle:
 
       commonLocation = common_data(locationNames, instructionWords)
       commonAdvance = common_data(language.dictionary["go"], instructionWords)
+      commonExplore = common_data(language.dictionary["explore"], instructionWords)
 
       if commonAdvance:
         if commonLocation:
-          print(commonAdvance, commonLocation)
           if commonLocation == self.state["location"]:
+            self.state.update({ "location": commonLocation })
             print("you are already in ", commonLocation)
           else:
-            print("You are moving to ", commonLocation)
+            self.locations[findByName(self.locations, self.state["location"])].leave()
+            self.state.update({ "location": commonLocation })
             self.goToLocation(commonLocation)
         else:
           print("I couldn't understand where you want to go.")
-      else:
-        print("Sorry I don't understand")
+      if commonExplore:
+        self.locations[findByName(self.locations, self.state["location"])].explore()
