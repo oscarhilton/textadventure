@@ -8,6 +8,8 @@ class Location:
     areaAmount = len(self.areas)
     print(self.exploreText)
     print("There are {} places to look...".format(areaAmount))
+    for area in self.areas:
+      print("You can explore ", area.name)
 
   def leave(self):
     print("You left ", self.name)
