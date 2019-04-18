@@ -81,6 +81,7 @@ class Puzzle:
 
       commonLocation = common_data(locationNames, instructionWords)
       commonArea = common_data(areaNames, instructionWords)
+      commonItem = None #Item
       commonAdvance = common_data(language.dictionary["go"], instructionWords)
       commonExplore = common_data(language.dictionary["explore"], instructionWords)
 
@@ -100,3 +101,5 @@ class Puzzle:
           self.currentLocation.areas[getIndexByName(self.currentLocation.areas, commonArea)].explore()
         else: 
           self.currentLocation.explore()
+      if commonItem:
+        print("Common item!")
