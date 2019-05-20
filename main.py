@@ -12,11 +12,11 @@ mobile5 = Puzzle(
   [ #locations
     Location(
       "bow",
-      "The front of the ship",
+      "You are at the very front of the ship. Dust covers everything you see.",
       [
         Area(
           "front",
-          "front of the bow",
+          "Right in front of you is a porthole which you can just about make out the crashing waves on the distant shoreline.",
           [
             HiddenItem(
               "chest",
